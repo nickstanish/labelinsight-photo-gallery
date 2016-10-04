@@ -1,8 +1,12 @@
-import React, { Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
+import Thumbnail from './Thumbnail';
+import PhotoViewer from './PhotoViewer';
+
 import { fetchPhotosIfNecessary, updatePhoto } from 'actions/appActions';
+
 
 class App extends Component {
   static propTypes = {
@@ -24,6 +28,8 @@ class App extends Component {
       selectedPhoto: null,
       editDescription: null
     };
+
+    this.updatePhoto = this.updatePhoto.bind(this);
   }
 
   componentDidMount() {
@@ -44,86 +50,35 @@ class App extends Component {
     });
   }
 
-  onEditDescription() {
-    this.setState({
-      editDescription: this.state.selectedPhoto.description || ''
-    });
-  }
 
-  onChangeDescription(value) {
-    this.setState({
-      editDescription: value
-    });
-  }
-
-  onSaveDescription() {
+  updatePhoto(updatedPhoto) {
     const { dispatch } = this.props;
-    const { selectedPhoto, editDescription } = this.state;
-    const updatedPhoto = {
-      ...selectedPhoto,
-      description: editDescription
-    };
-    dispatch(updatePhoto(updatedPhoto)).then(() => {
+    return dispatch(updatePhoto(updatedPhoto)).then(() => {
       this.setState({
-        editDescription: null,
         selectedPhoto: updatedPhoto
       });
     });
   }
 
-  onCancelDescription() {
-    this.setState({
-      editDescription: null
-    });
-  }
 
   render() {
     const { photos } = this.props;
     const { selectedPhoto } = this.state;
+
     return (
       <div className={classNames({ 'has-modal': selectedPhoto })}>
         <div id="content-wrapper">
-          <h1>Photo Gallery</h1>
+          <h1 className="center">Photo Gallery</h1>
           <div className="photo-gallery">
+          {/* If this request took longer, it would be a good idea to have an indicator here
+            !photos && this.props.isFetching && <div>Just a second... <i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
+          */}
 
-
-          {
-            photos && photos.map((photo) => <div key={photo.id}><img className="tbn" onClick={() => this.onSelect(photo)} src={photo.thumbnailUrl}></img></div>)
-          }
+            {
+              photos && photos.map(photo => <Thumbnail key={photo.id} onSelect={() => this.onSelect(photo)} photo={photo} />)
+            }
           </div>
-          {
-            selectedPhoto && (
-              <div className="photo-preview">
-                <button className="btn close" onClick={() => this.onClosePreview()} title="Close"><i className="fa fa-times"></i></button>
-                <div className="center">
-                  <h1>{selectedPhoto.title}</h1>
-                  <figure>
-                    <img className="photo" src={selectedPhoto.url}></img>
-
-                    { this.state.editDescription === null &&
-                      <figcaption>
-                        {selectedPhoto.description}
-                        <button className="btn" onClick={() => {this.onEditDescription()}}>
-                          <i className="fa fa-pencil-square-o margin-right-small"></i>
-                          {selectedPhoto.description ? 'Edit caption' : 'Add a caption'}
-                        </button>
-
-                      </figcaption>
-                    }
-                    { this.state.editDescription !== null &&
-
-                        <div>
-                          <input value={this.state.editDescription} onChange={event => this.onChangeDescription(event.target.value)} />
-                          <button className="btn" onClick={() => this.onSaveDescription()}>Save</button>
-                          <button className="btn" onClick={() => this.onCancelDescription()}>Cancel</button>
-                        </div>
-
-                    }
-                  </figure>
-                </div>
-              </div>
-            )
-          }
+          <PhotoViewer selectedPhoto={selectedPhoto} updatePhoto={this.updatePhoto} onClosePreview={() => this.onClosePreview()} />
         </div>
       </div>
     );
@@ -132,7 +87,7 @@ class App extends Component {
 
 function mapStateToProps(state, props) {
   return {
-    isFetching: state.app.isFetching,
+    isFetching: state.app.isFetchingPhotos,
     photos: state.app.photos
   };
 }

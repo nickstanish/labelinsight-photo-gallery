@@ -2,7 +2,7 @@ import { AppActions } from 'actions/appActions';
 import { Status } from 'actions/statusActions';
 
 const initialState = {
-  fetchingPhotos: false,
+  isFetchingPhotos: false,
   photos: null
 };
 
@@ -11,7 +11,7 @@ export default function appReducer(state = initialState, action) {
     case AppActions.FETCH_PHOTOS: {
       return {
         ...state,
-        fetchingPhotos: action.status === Status.NONE,
+        isFetchingPhotos: action.status === Status.NONE,
         photos: action.photos
       };
     }
