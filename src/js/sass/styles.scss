@@ -1,0 +1,128 @@
+$white: #fff;
+$light-gray: darken($white, 15%);
+$gray: #e6e6e6;
+$black: #000;
+
+body {
+  font-family: sans-serif;
+  letter-spacing: 1.3px;
+  font-size: 18px;
+  color: #4c4c4c;
+}
+
+.center {
+  text-align: center;
+}
+
+.margin-right-small {
+  margin-right: 5px;
+}
+
+
+.has-modal {
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+
+
+$photo-size: 150px;
+$photo-padding: 10px;
+$photo-margin: 5px;
+$photo-border-width: 1px;
+
+$photo-base: $photo-size + ($photo-padding + $photo-margin + $photo-border-width) * 2;
+
+.photo-gallery {
+  line-height: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 5 * $photo-base;
+  margin: auto;
+
+  @for $i from 4 through 1 {
+    $max-size: ($i + 1) * $photo-base + 30px;
+    @media only screen and (max-width : $max-size) {
+      width: $i * $photo-base;
+    }
+  }
+
+  .tbn {
+    height: $photo-size;
+    width: $photo-size;
+    line-height: 0;
+    padding: $photo-padding;
+    border: $photo-border-width solid $black;
+    margin: $photo-margin;
+    flex: 0 0;
+    transition: 0.1s all ease;
+
+    &:hover {
+      background-color: $light-gray;
+    }
+  }
+}
+
+.photo-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 15px;
+
+  button.btn {
+    color: $light-gray;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  button.close {
+    position: fixed;
+    text-shadow: 1px 1px 2px $black;
+  }
+
+  .photo {
+    width: 100%;
+    max-width: 600px;
+    background-color: $white;
+  }
+
+  figure {
+    width: 100%;
+    margin: 0;
+  }
+
+  input {
+    background-color: rgba(255,255,255,0.8);
+    border: none;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    padding: 3px 6px;
+    display: block;
+    margin: auto;
+    margin-bottom: 5px;
+
+  }
+}
+
+button.btn {
+  background: transparent;
+  border: none;
+}
