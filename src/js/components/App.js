@@ -19,14 +19,17 @@ class App extends Component {
       url: PropTypes.string,
       thumbnailUrl: PropTypes.string,
       description: PropTypes.string
-    }))
+    })),
+    params: PropTypes.shape({
+      id: PropTypes.string
+    })
   };
 
   constructor(props) {
     super(props);
+
     this.state = {
-      selectedPhoto: null,
-      editDescription: null
+      selectedPhoto: null
     };
 
     this.updatePhoto = this.updatePhoto.bind(this);
@@ -34,19 +37,36 @@ class App extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(fetchPhotosIfNecessary());
+    dispatch(fetchPhotosIfNecessary()).then((photos) => {
+      if (this.props.params.id) {
+        const photoId = parseInt(this.props.params.id);
+        this.selectPhotoById(photos, photoId);
+      }
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.params.id !== nextProps.params.id) {
+      this.selectPhotoById(nextProps.photos, parseInt(nextProps.params.id));
+    }
+  }
+
+  selectPhotoById(photos, id = null) {
+    if (id === null) {
+      this.setState({
+        selectedPhoto: null
+      });
+    } else {
+      const selectedPhoto = photos.filter(photo => photo.id === id)[0];
+      this.setState({
+        selectedPhoto: selectedPhoto || null
+      });
+    }
   }
 
   onSelect(photo) {
     this.setState({
       selectedPhoto: photo
-    });
-  }
-
-  onClosePreview() {
-    this.setState({
-      selectedPhoto: null,
-      editDescription: null
     });
   }
 
@@ -78,7 +98,7 @@ class App extends Component {
               photos && photos.map(photo => <Thumbnail key={photo.id} onSelect={() => this.onSelect(photo)} photo={photo} />)
             }
           </div>
-          <PhotoViewer selectedPhoto={selectedPhoto} updatePhoto={this.updatePhoto} onClosePreview={() => this.onClosePreview()} />
+          <PhotoViewer selectedPhoto={selectedPhoto} updatePhoto={this.updatePhoto} />
         </div>
       </div>
     );

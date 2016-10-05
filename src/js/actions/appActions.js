@@ -20,7 +20,7 @@ export function fetchPhotosIfNecessary() {
   return (dispatch) => {
     dispatch(fetchPhotosAction(Status.NONE));
 
-    fetch(PHOTO_API_URL)
+    return fetch(PHOTO_API_URL)
       .then(response => response.json())
       .then(data => data.slice(0, 25))
       .then(data => data.map(photo => { return {...photo, thumbnailUrl: photo.url.replace(/\/\d+\//, '/150/') }})) // Fix thumbnail color
@@ -39,9 +39,9 @@ export function fetchPhotosIfNecessary() {
       })
       .then(data => {
         dispatch(fetchPhotosAction(Status.SUCCESS, data));
+        return data;
       })
       .catch(error => {
-        console.error(error);
         dispatch(fetchPhotosAction(Status.ERROR));
       });
 

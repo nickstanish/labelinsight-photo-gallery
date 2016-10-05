@@ -18,6 +18,10 @@ body {
   margin-right: 5px;
 }
 
+.inline {
+  display: inline;
+}
+
 
 .has-modal {
   overflow: hidden;
@@ -106,6 +110,7 @@ $photo-base: $photo-size + ($photo-padding + $photo-margin + $photo-border-width
   figure {
     width: 100%;
     margin: 0;
+    margin-bottom: 15px;
   }
 
   input {

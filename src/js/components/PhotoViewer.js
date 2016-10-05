@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router'
 
 class PhotoViewer extends Component {
   static propTypes = {
-    onClosePreview: PropTypes.func,
     updatePhoto: PropTypes.func,
     selectedPhoto: PropTypes.shape({
       albumId: PropTypes.number,
@@ -34,7 +34,9 @@ class PhotoViewer extends Component {
     });
   }
 
-  onSaveDescription() {
+  submitDescription(event) {
+    event.preventDefault();
+
     const { updatePhoto, selectedPhoto } = this.props;
     const { editDescription } = this.state;
     const updatedPhoto = {
@@ -71,15 +73,18 @@ class PhotoViewer extends Component {
   renderEditingDescription(description) {
     return (
       <div>
-        <input value={description} onChange={event => this.onChangeDescription(event.target.value)} />
-        <button className="btn" onClick={() => this.onSaveDescription()}>Save</button>
+        <form onSubmit={(event) => this.submitDescription(event)} className="inline">
+          <input value={description} onChange={event => this.onChangeDescription(event.target.value)} />
+
+          <button className="btn" type="submit">Save</button>
+        </form>
         <button className="btn" onClick={() => this.onCancelDescription()}>Cancel</button>
       </div>
     );
   }
 
   render() {
-    const { selectedPhoto, onClosePreview } = this.props;
+    const { selectedPhoto } = this.props;
     const { editDescription } = this.state;
 
     if (!selectedPhoto) {
@@ -90,9 +95,11 @@ class PhotoViewer extends Component {
 
     return (
         <div className="photo-viewer">
-          <button className="btn close" onClick={onClosePreview} title="Close">
-            <i className="fa fa-times"></i>
-          </button>
+          <Link to="/">
+            <button className="btn close" title="Close">
+              <i className="fa fa-times"></i>
+            </button>
+          </Link>
           <div className="center">
             <h1>{selectedPhoto.title}</h1>
             <figure>

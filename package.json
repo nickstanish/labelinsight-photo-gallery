@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config=webpack.config.js --hot --colors --compress --inline --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack-dev-server --config=webpack.dev.config.js --hot --colors --compress --inline --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist",
+    "build": "webpack --config=webpack.config.js",
+    "dist": "npm run clean && mkdir -p dist && cp -r src/public src/views/index.html dist && npm run build",
+    "gh-pages": "git subtree push --prefix dist origin gh-pages"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +19,7 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
+    "react-router": "^2.8.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "whatwg-fetch": "^1.0.0"

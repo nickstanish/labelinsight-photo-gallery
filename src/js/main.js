@@ -5,13 +5,13 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 
 import store from 'store/store'
-import App from './components/App'
+import AppRouter from './AppRouter'
 
 
 
 render(
   <Provider store={store}>
-    <App />
+    <AppRouter />
   </Provider>,
   document.getElementById('bind-node')
 );

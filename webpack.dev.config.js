@@ -3,6 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpackConfig = {
   devtool: 'source-map',
   entry: [
+    './node_modules/webpack/hot/dev-server.js',
     'es6-promise/auto',
     'whatwg-fetch',
     './src/js/main.js'
@@ -39,7 +40,14 @@ const webpackConfig = {
   },
   plugins: [
       new ExtractTextPlugin('css/styles.css')
-  ]
+  ],
+  devServer: {
+    port: 3000,
+    historyApiFallback: {
+      index: 'views/index.html'
+    },
+    contentBase: "./src"
+  }
 };
 
 module.exports = webpackConfig;

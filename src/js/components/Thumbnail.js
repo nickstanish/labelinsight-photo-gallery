@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 
 function Thumbnail(props) {
-  const { photo: { thumbnailUrl }, onSelect } = props;
+  const { photo: { thumbnailUrl, id }, onSelect } = props;
   return (
     <div>
-      <img className="tbn" onClick={onSelect} src={thumbnailUrl}></img>
+      <Link to={`/${id}`}>
+        <img className="tbn" onClick={onSelect} src={thumbnailUrl}></img>
+      </Link>
     </div>
   );
 }

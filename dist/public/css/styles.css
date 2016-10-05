@@ -1,0 +1,99 @@
+body {
+  font-family: sans-serif;
+  letter-spacing: 1.3px;
+  font-size: 18px;
+  color: #4c4c4c; }
+
+.center {
+  text-align: center; }
+
+.margin-right-small {
+  margin-right: 5px; }
+
+.inline {
+  display: inline; }
+
+.has-modal {
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%; }
+
+#content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px; }
+
+.photo-gallery {
+  line-height: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 910px;
+  margin: auto; }
+  @media only screen and (max-width: 940px) {
+    .photo-gallery {
+      width: 728px; } }
+  @media only screen and (max-width: 758px) {
+    .photo-gallery {
+      width: 546px; } }
+  @media only screen and (max-width: 576px) {
+    .photo-gallery {
+      width: 364px; } }
+  @media only screen and (max-width: 394px) {
+    .photo-gallery {
+      width: 182px; } }
+  .photo-gallery .tbn {
+    height: 150px;
+    width: 150px;
+    line-height: 0;
+    padding: 10px;
+    border: 1px solid #000;
+    margin: 5px;
+    flex: 0 0;
+    transition: 0.1s all ease; }
+    .photo-gallery .tbn:hover {
+      background-color: #d9d9d9; }
+
+.photo-viewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 15px; }
+  .photo-viewer button.btn {
+    color: #d9d9d9; }
+    .photo-viewer button.btn:hover {
+      color: #fff; }
+  .photo-viewer button.close {
+    position: fixed;
+    text-shadow: 1px 1px 2px #000; }
+  .photo-viewer .photo {
+    width: 100%;
+    max-width: 600px;
+    background-color: #fff; }
+  .photo-viewer figure {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 15px; }
+  .photo-viewer input {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    padding: 3px 6px;
+    display: block;
+    margin: auto;
+    margin-bottom: 5px; }
+
+button.btn {
+  background: transparent;
+  border: none; }
+
+/*# sourceMappingURL=styles.css.map*/
